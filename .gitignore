@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environment
+restenv/
+
+# SQLite database
+db.sqlite3
+db.sqlite3-journal
+
+# Django specific
+*.log
+local_settings.py
+*.pot
+*.py,cover
+*.pid
+*.seed
+
+# Media & Static files
+/media/
+/static/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+*.hypothesis/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
