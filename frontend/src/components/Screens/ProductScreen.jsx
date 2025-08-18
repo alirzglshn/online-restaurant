@@ -1,42 +1,39 @@
-import React, { useEffect, useState } from "react";
-import {
-  Row,
-  Col,
-  Image,
-  ListGroup,
-  Button,
-  Card,
-  Container,
-} from "react-bootstrap";
+import React, { useEffect } from "react";
+import { Row, Col, Image, ListGroup, Button, Card } from "react-bootstrap";
 import Rating from "../Rating";
-import axios from "axios";
 import { Link, useParams } from "react-router-dom";
+import { listProductDetails } from "../../actions/ProductActions";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function ProductScreen({ params }) {
+export default function ProductScreen() {
   const { id } = useParams();
-  const [product, setProduct] = useState([]);
+  const dispatch = useDispatch();
+
+  const productDetails = useSelector((state) => state.productDetails);
+  const { error, loading, product } = productDetails;
 
   useEffect(() => {
-    async function fetchproduct() {
-      const { data } = await axios.get(`http://127.0.0.1:8000/product/${id}`);
-      
-      setProduct(data);
-    }
-    fetchproduct();
-  }, [id]);
+    dispatch(listProductDetails(id));
+  }, [dispatch, id]);
+
+  if (loading) return <h2>Loading...</h2>;
+  if (error) return <h3 className="text-danger">{error}</h3>;
+  if (!product) return null;
 
   return (
-    <>
-      <div>
-        <Link to="/" className="btn btn-dark my-3">
-          Go Back
-        </Link>
+    <div>
+      <Link to="/" className="btn btn-dark my-3">
+        Go Back
+      </Link>
 
-        <Row>
-          <Col md={6}>
-            <Image src={`http://127.0.0.1:8000${product.image}`} alt={product.name} fluid />
-          </Col>
-        
+      <Row>
+        <Col md={6}>
+          <Image
+            src={`http://127.0.0.1:8000${product.image}`}
+            alt={product.productname}
+            fluid
+          />
+        </Col>
 
         <Col md={3}>
           <ListGroup variant="flush">
@@ -50,8 +47,7 @@ export default function ProductScreen({ params }) {
                 color={"#f8e825"}
               />
             </ListGroup.Item>
-            <ListGroup.Item>Brand: {product.productbrand} </ListGroup.Item>
-
+            <ListGroup.Item>Brand: {product.productbrand}</ListGroup.Item>
             <ListGroup.Item>Description: {product.productinfo}</ListGroup.Item>
           </ListGroup>
         </Col>
@@ -75,19 +71,19 @@ export default function ProductScreen({ params }) {
                   </Col>
                 </Row>
               </ListGroup.Item>
-            <ListGroup.Item>
-                <Button className='btn-block btn-success' disabled={product.stockcount==0} type='button'>Add to Cart</Button>
-
-            </ListGroup.Item>
-
-
+              <ListGroup.Item>
+                <Button
+                  className="btn-block btn-success"
+                  disabled={product.stockcount === 0}
+                  type="button"
+                >
+                  Add to Cart
+                </Button>
+              </ListGroup.Item>
             </ListGroup>
           </Card>
         </Col>
-
-
-        </Row>
-      </div>
-    </>
+      </Row>
+    </div>
   );
 }
