@@ -17,7 +17,7 @@ function App() {
         <br />
         <br />
         <Routes>
-          <Route path="/" element={<HomeScreen />} />
+          <Route path="/" element={<HomeScreen />} /> 
           <Route path="/login" element={<LoginScreen />} />
           <Route path="/signup" element={<SignUpScreen />} />
           <Route path="/cart" element={<CartScreen />} />

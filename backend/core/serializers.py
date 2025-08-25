@@ -26,7 +26,7 @@ class UserSerializer(serializers.ModelSerializer):
             name=obj.email[:5]
             return name
         return name
-    
+     
     def get__id(self,obj):
         return obj.id
 
