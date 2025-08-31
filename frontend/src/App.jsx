@@ -8,6 +8,7 @@ import Header from "./components/Header.jsx";
 import SignUpScreen from "./components/Screens/SignUpScreen.jsx";
 import LoginScreen from "./components/Screens/LoginScreen.jsx";
 import ProductScreen from "./components/Screens/ProductScreen.jsx";
+import CheckoutScreen from "./components/Screens/CheckoutScreen";
 
 function App() {
   return (
@@ -20,8 +21,9 @@ function App() {
           <Route path="/" element={<HomeScreen />} /> 
           <Route path="/login" element={<LoginScreen />} />
           <Route path="/signup" element={<SignUpScreen />} />
-          <Route path="/cart" element={<CartScreen />} />
+          <Route path="/cart/:id?" element={<CartScreen />} />
           <Route path="/product/:id" element={<ProductScreen />} />
+          <Route path="/checkout" element={<CheckoutScreen />} />
         </Routes>
       </Router>
     </>
