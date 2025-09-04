@@ -12,6 +12,7 @@ build/
 
 # Virtual environment
 restenv/
+foodenv/
 
 # SQLite database
 db.sqlite3

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'; // Added useState and useEffect
-import { LinkContainer } from 'react-router-bootstrap';
-import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
+import React, { useState, useEffect } from "react"; // Added useState and useEffect
+import { LinkContainer } from "react-router-bootstrap";
+import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 
 export default function Header() {
   // ===== Added userInfo state to track logged-in user =====
@@ -8,10 +8,22 @@ export default function Header() {
 
   // ===== useEffect to get userInfo from localStorage when component mounts =====
   useEffect(() => {
-    const storedUser = localStorage.getItem('userInfo'); // read from localStorage
+    const storedUser = localStorage.getItem("userInfo"); // read from localStorage
     if (storedUser) {
       setUserInfo(JSON.parse(storedUser)); // parse and store in state
     }
+
+    // Listen for login events
+    const handleUserLogin = () => {
+      const updatedUser = localStorage.getItem("userInfo");
+      setUserInfo(updatedUser ? JSON.parse(updatedUser) : null);
+    };
+
+    window.addEventListener("userLogin", handleUserLogin);
+
+    return () => {
+      window.removeEventListener("userLogin", handleUserLogin);
+    };
   }, []);
 
   return (
@@ -34,23 +46,18 @@ export default function Header() {
 
             {/* ===== Conditional rendering for login / user dropdown ===== */}
             {!userInfo ? (
-              // ===== Show login link if user not logged in =====
+              // Show login link if user not logged in
               <LinkContainer to="/login">
                 <Nav.Link>ورود</Nav.Link>
               </LinkContainer>
             ) : (
-              // ===== Show dropdown with username and logout if logged in =====
+              // Show dropdown with username and logout if logged in
               <NavDropdown title={userInfo.username} id="user-dropdown">
-                <LinkContainer to="/signup">
-                  <NavDropdown.Item>ثبت نام</NavDropdown.Item>
-                </LinkContainer>
-
-                <NavDropdown.Divider />
                 <NavDropdown.Item
                   onClick={() => {
-                    // ===== Logout functionality: remove userInfo from localStorage and reload page =====
-                    localStorage.removeItem('userInfo');
-                    window.location.reload(); // reload to update header
+                    localStorage.removeItem("userInfo");
+                    setUserInfo(null); // update header reactively
+                    window.dispatchEvent(new Event("userLogout")); // notify other components
                   }}
                 >
                   خروج

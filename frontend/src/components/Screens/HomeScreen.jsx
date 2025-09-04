@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Product from "../Product";
@@ -18,11 +17,23 @@ function HomeScreen() {
   useEffect(() => {
     dispatch(listProducts());
 
-    // Get user info from localStorage
-    const storedUser = localStorage.getItem("userInfo");
-    if (storedUser) {
-      setUserInfo(JSON.parse(storedUser));
-    }
+    // Function to update userInfo from localStorage
+    const updateUserInfo = () => {
+      const storedUser = localStorage.getItem("userInfo");
+      setUserInfo(storedUser ? JSON.parse(storedUser) : null);
+    };
+
+    // Initial load
+    updateUserInfo();
+
+    // Listen for login/logout events
+    window.addEventListener("userLogin", updateUserInfo);
+    window.addEventListener("userLogout", updateUserInfo);
+
+    return () => {
+      window.removeEventListener("userLogin", updateUserInfo);
+      window.removeEventListener("userLogout", updateUserInfo);
+    };
   }, [dispatch]);
 
   return (

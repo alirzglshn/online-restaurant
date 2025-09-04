@@ -27,7 +27,7 @@ function LoginScreen() {
 
       // Save token and user info in localStorage
       localStorage.setItem("userInfo", JSON.stringify(data));
-
+      window.dispatchEvent(new Event("userLogin"));
       setLoading(false);
       navigate("/"); // redirect to home after login
     } catch (err) {
