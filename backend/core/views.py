@@ -66,11 +66,10 @@ def getUsers(request):
 def registerUser(request):
     data = request.data
     try:
-        # create user as active immediately, no email activation
         user = User.objects.create(
-            first_name=data['fname'],
-            last_name=data['lname'],
-            username=data['email'],
+            first_name=data.get('fname', ''),
+            last_name=data.get('lname', ''),
+            username=data['username'],   # 👈 use username from frontend
             email=data['email'],
             password=make_password(data['password']),
             is_active=True

@@ -5,6 +5,7 @@ function SignUpScreen() {
   const [formData, setFormData] = useState({
     fname: "",
     lname: "",
+    username: "",  // added here
     email: "",
     password: "",
   });
@@ -26,7 +27,7 @@ function SignUpScreen() {
     try {
       const { data } = await axios.post(
         "http://127.0.0.1:8000/users/register/",
-        formData,
+        formData,  // now includes username
         {
           headers: {
             "Content-Type": "application/json",
@@ -36,7 +37,7 @@ function SignUpScreen() {
 
       console.log("User registered:", data);
       setSuccess("✅ Account created successfully! You can now log in.");
-      setFormData({ fname: "", lname: "", email: "", password: "" });
+      setFormData({ fname: "", lname: "", username: "", email: "", password: "" });
     } catch (err) {
       setError(err.response?.data?.details || "Something went wrong");
     } finally {
@@ -76,6 +77,19 @@ function SignUpScreen() {
               required
               className="form-control"
               placeholder="Enter last name"
+            />
+          </div>
+
+          <div className="mb-3">
+            <label className="form-label">Username</label>
+            <input
+              type="text"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+              className="form-control"
+              placeholder="Choose a username"
             />
           </div>
 
