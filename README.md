@@ -1,75 +1,96 @@
-🍽️ Online-Restaurant
+# Online Restaurant Platform
 
-A modern full-stack restaurant management and ordering platform built with Django REST Framework and React.js (Vite). Designed to demonstrate real-world full-stack capabilities including authentication, product management, and client-side rendering.
+A full-stack restaurant ordering and management application built with Django REST Framework on the backend and React.js (Vite) on the frontend. The project covers JWT-based authentication, product management, and role-based access control through a decoupled API architecture.
 
-🚀 Project Overview
+---
 
-Online-Restaurant allows users to browse products, view details, and manage accounts. Admins can access user data and product listings, making it a fully functional full-stack web app.
+## Tech Stack
 
-Key highlights:
+| Layer | Technology |
+|---|---|
+| Backend | Django 5.2.5, Django REST Framework |
+| Authentication | Simple JWT, CORS Headers |
+| Frontend | React.js, Vite, React Router |
+| Database | SQLite (portable to PostgreSQL or MySQL) |
+| Rendering | Client-Side Rendering (CSR) |
 
-Backend: Django 5.2.5 + Django REST Framework + Simple JWT Authentication
+---
 
-Frontend: React.js (Vite) with client-side rendering
+## Project Structure
 
-Database: SQLite (ready to upgrade to PostgreSQL/MySQL)
-
-Full-stack features: Authentication, product CRUD, admin controls, JWT-based security
-
-🗂️ Project Structure
+```
 online-restaurant/
-├── backend/           # Django REST Framework backend
-│   ├── core/          # Main app with models, views, serializers
-│   ├── backend/       # Django project settings & root URLs
-│   ├── db.sqlite3     # SQLite database
-│   ├── staticfiles/   # Collected static files
-│   └── media/         # Uploaded media files
-└── frontend/          # React.js (Vite) frontend
+├── backend/
+│   ├── core/           # Models, views, and serializers
+│   ├── backend/        # Project settings and root URLs
+│   ├── staticfiles/    # Collected static files
+│   └── media/          # Uploaded media files
+└── frontend/           # React.js (Vite) SPA
+```
 
-🛠️ Technologies Used
-Layer	Technology
-Backend	Django 5.2.5, Django REST Framework, Simple JWT, CORS Headers
-Frontend	React.js, Vite, React Router
-Database	SQLite
-Authentication	JWT Tokens, User Registration/Login
-🔑 Features
+---
 
-User registration & login with JWT authentication
+## Features
 
-User profile management
+- User registration and login with JWT authentication
+- User profile retrieval and management
+- Product listing, search, and detail views including ratings and reviews
+- Admin-only endpoints for user and product management
+- Fully decoupled frontend and backend
 
-Admin-only endpoints to manage users and products
+---
 
-Browse and search products
+## API Reference
 
-Detailed product views including ratings and reviews
+**Public**
 
-Fully responsive frontend with client-side rendering
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/products/` | List all products |
+| GET | `/product/<id>/` | Get single product details |
 
-📌 API Endpoints (Backend Highlights)
+**Authenticated Users**
 
-Public endpoints:
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/users/register/` | Register a new user |
+| POST | `/users/login/` | Obtain JWT token |
+| GET | `/users/profile/` | Retrieve authenticated user profile |
 
-Method	Endpoint	Description
-GET	/	Hello World / test route
-GET	/products/	List all products
-GET	/product/<id>/	Get single product details
+**Admin Only**
 
-User endpoints:
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/users/` | List all users |
 
-Method	Endpoint	Description
-POST	/users/register/	Register new user
-POST	/users/login/	JWT token login
-GET	/users/profile/	Retrieve user profile (auth)
+---
 
-Admin-only endpoints:
+## Setup
 
-Method	Endpoint	Description
-GET	/users/	List all users (admin only)
-🖥️ Frontend
+```bash
+# Clone the repository
+git clone https://github.com/alirzglshn/online-restaurant.git
+cd online-restaurant
 
-Built with React.js + Vite for a fast, modern SPA experience
+# --- Backend ---
+cd backend
+python3 -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
 
-Client-side rendering ensures smooth navigation and responsive UI
+# --- Frontend ---
+cd ../frontend
+npm install
+npm run dev
+```
 
-Integrates seamlessly with Django REST Framework backend
+Backend runs at `http://127.0.0.1:8000/`  
+Frontend runs at `http://localhost:5173/`
+
+---
+
+## Author
+
+Alireza Golshan — Backend Developer (Django)
